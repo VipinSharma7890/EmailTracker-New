@@ -126,7 +126,7 @@ public ResponseEntity<byte[]> open(@RequestParam("id") int id, HttpServletReques
     System.out.println("Tracking Image Requested - ID: " + id + ", User-Agent: " + userAgent + ", IP: " + ipAddress);
 
     // Detect bots (example logic, improve as needed)
-    if (userAgent == null || userAgent.toLowerCase().contains("bot") || userAgent.toLowerCase().contains("crawler") || userAgent.toLowerCase().contains("khtml")) {
+    if (userAgent == null || userAgent.toLowerCase().contains("bot") || userAgent.toLowerCase().contains("crawler")) {
         return ResponseEntity.status(HttpStatus.OK).build(); // Return empty response for bots
     }
 
@@ -134,13 +134,13 @@ public ResponseEntity<byte[]> open(@RequestParam("id") int id, HttpServletReques
     InputStream in = getClass().getResourceAsStream("/static/photos/favicon.png");
     byte[] imageBytes = IOUtils.toByteArray(in);
 
-// if(userAgent.toLowerCase().contains("GoogleImageProxy")	){
+if(userAgent.toLowerCase().contains("googleimageproxy")	){
     // Update mail entity
     mailRepository.findById(id).ifPresent(mailEntity -> {
         mailEntity.setOpened(LocalDateTime.now());
         mailRepository.save(mailEntity);
     });
-
+}
     // Set response headers
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.IMAGE_JPEG);
