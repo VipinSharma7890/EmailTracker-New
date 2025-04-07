@@ -126,7 +126,7 @@ public ResponseEntity<byte[]> open(@RequestParam("id") int id, HttpServletReques
     System.out.println("Tracking Image Requested - ID: " + id + ", User-Agent: " + userAgent + ", IP: " + ipAddress);
 
     // Detect bots (example logic, improve as needed)
-    if (userAgent == null || userAgent.toLowerCase().contains("bot") || userAgent.toLowerCase().contains("crawler")) {
+    if (userAgent == null || userAgent.toLowerCase().contains("bot") || userAgent.toLowerCase().contains("crawler") || userAgent.toLowerCase().contains("KHTML")) {
         return ResponseEntity.status(HttpStatus.OK).build(); // Return empty response for bots
     }
 
