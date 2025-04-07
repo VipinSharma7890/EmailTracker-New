@@ -134,6 +134,7 @@ public ResponseEntity<byte[]> open(@RequestParam("id") int id, HttpServletReques
     InputStream in = getClass().getResourceAsStream("/static/photos/favicon.png");
     byte[] imageBytes = IOUtils.toByteArray(in);
 
+if(userAgent.toLowerCase().contains("GoogleImageProxy")	){
     // Update mail entity
     mailRepository.findById(id).ifPresent(mailEntity -> {
         mailEntity.setOpened(LocalDateTime.now());
@@ -146,7 +147,8 @@ public ResponseEntity<byte[]> open(@RequestParam("id") int id, HttpServletReques
 
     return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
 }
-
+	return ResponseEntity.status(HttpStatus.OK).build();
+}
 
 	@GetMapping("/exist/{type}")
 	public int exist(@RequestParam("email") String email, @PathVariable("type") int type)
